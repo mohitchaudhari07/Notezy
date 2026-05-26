@@ -3,11 +3,24 @@ const cors = require('cors');
 const corsOptions = require('./config/cors');
 const errorHandler = require('./middleware/error.middleware');
 const ApiError = require('./utils/ApiError');
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
+const compression = require('compression');
 
 const app = express();
 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+});
+
+
+
 // Standard premium middlewares
 app.use(cors(corsOptions));
+app.use(limiter);
+app.use(compression()); // Enable gzip compression for responses
+app.use(helmet()); // Set security-related HTTP headers
 app.use(express.json({ limit: '16kb' }));
 app.use(express.urlencoded({ extended: true, limit: '16kb' }));
 app.use(express.static('public'));

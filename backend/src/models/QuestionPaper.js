@@ -61,6 +61,10 @@ const questionPaperSchema = new mongoose.Schema(
 questionPaperSchema.index({ university: 1, branch: 1, academicYear: 1 });
 questionPaperSchema.index({ subject: 1 });
 questionPaperSchema.index({ subject: 'text', branch: 'text' }); // Enable text search on subjects and streams
+questionPaperSchema.index({
+  isApproved: 1,
+  createdAt: -1
+});
 
 const QuestionPaper = mongoose.model('QuestionPaper', questionPaperSchema);
 

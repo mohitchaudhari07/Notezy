@@ -4,6 +4,7 @@ const University = require("../models/University");
 const Branch = require("../models/Branch");
 const ApiError = require("../utils/ApiError");
 const QuestionPaper = require("../models/QuestionPaper");
+const validatePagination = require("../utils/pagination");
 
 class ResourceService {
   async getResources({
@@ -47,36 +48,41 @@ class ResourceService {
     if (query) {
       filter.$text = { $search: query };
     }
-
-    const skip = (page - 1) * limit;
+    const {
+      page: validPage,
+      limit: validLimit,
+      skip,
+    } = validatePagination(page, limit);
 
     const resources = await Resource.find(filter)
+      .lean() // Populate related fields for better frontend display
       .populate("subject", "name code")
       .populate("branch", "name code")
       .populate("university", "name shortName")
-      .populate("uploadedBy", "name email")
+      .populate("uploadedBy", "name")
       .skip(skip)
-      .limit(Number(limit))
+      .limit(validLimit)
       .sort({ createdAt: -1 });
-
-    console.log("Resources count:", resources.length);
 
     const totalCount = await Resource.countDocuments(filter);
 
     return {
       resources,
-      totalPages: Math.ceil(totalCount / limit),
-      currentPage: Number(page),
+      totalPages: Math.ceil(totalCount / validLimit),
+      currentPage: validPage,
       totalCount,
     };
   }
 
   async getResourceById(id) {
-    const resource = await Resource.findById(id)
+    const resource = await Resource.findOne({
+      _id: id,
+      isApproved: true,
+    })
       .populate("subject")
       .populate("branch")
       .populate("university")
-      .populate("uploadedBy", "name email");
+      .populate("uploadedBy", "name");
 
     if (!resource) {
       throw new ApiError(404, "Resource not found");

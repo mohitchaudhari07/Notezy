@@ -108,6 +108,11 @@ resourceSchema.index({
   uploadedBy: 1
 });
 
+resourceSchema.index({
+  isApproved: 1,
+  createdAt: -1
+});
+
 const Resource = mongoose.model('Resource', resourceSchema);
 
 module.exports = Resource;
