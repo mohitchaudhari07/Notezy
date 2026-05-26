@@ -48,6 +48,14 @@ app.use('/api/ai', aiRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/users', userRoutes);
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Notezy API is running",
+    environment: process.env.NODE_ENV,
+  });
+});
+
 // Handle unknown route hits (404)
 app.use((req, res, next) => {
   next(new ApiError(404, `Route ${req.originalUrl} not found`));
