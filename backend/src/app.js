@@ -1,0 +1,46 @@
+const express = require('express');
+const cors = require('cors');
+const corsOptions = require('./config/cors');
+const errorHandler = require('./middleware/error.middleware');
+const ApiError = require('./utils/ApiError');
+
+const app = express();
+
+// Standard premium middlewares
+app.use(cors(corsOptions));
+app.use(express.json({ limit: '16kb' }));
+app.use(express.urlencoded({ extended: true, limit: '16kb' }));
+app.use(express.static('public'));
+
+// Setup cookie parsing if needed (we check headers mainly, cookies as fallback)
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
+// Base health check
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'OK', uptime: process.uptime(), message: 'Server is healthy' });
+});
+
+// Import route files
+const authRoutes = require('./routes/auth.routes');
+const resourceRoutes = require('./routes/resource.routes');
+const aiRoutes = require('./routes/ai.routes');
+const dashboardRoutes = require('./routes/dashboard.routes');
+const userRoutes = require('./routes/user.routes');
+
+// Mount API routes
+app.use('/api/auth', authRoutes);
+app.use('/api/resources', resourceRoutes);
+app.use('/api/ai', aiRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/users', userRoutes);
+
+// Handle unknown route hits (404)
+app.use((req, res, next) => {
+  next(new ApiError(404, `Route ${req.originalUrl} not found`));
+});
+
+// Mount global error handler
+app.use(errorHandler);
+
+module.exports = app;
