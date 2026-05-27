@@ -1,8 +1,7 @@
 import ReactGA from "react-ga4";
 
-const MEASUREMENT_ID = "G-4PS1Y3NSRG";
 
-ReactGA.initialize(MEASUREMENT_ID);
+ReactGA.initialize(import.meta.env.VITE_GA_ID);
 
 export default ReactGA;
 
