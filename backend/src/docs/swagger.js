@@ -13,8 +13,8 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: 'http://localhost:5000/api/',
-        description: 'Development Server'
+        url: 'https://notezy-u585.onrender.com/api/',
+        description: 'Production Server'
       }
     ],
     components: {

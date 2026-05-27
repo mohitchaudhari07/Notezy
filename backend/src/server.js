@@ -12,6 +12,7 @@ const connectDB = async () => {
 };
 
 const PORT = process.env.PORT || 5000;
+const SERVER_URL = process.env.SERVER_URL || `http://localhost:${PORT}`;
 
 // Initialize server boot processes
 const startServer = async () => {
@@ -20,7 +21,7 @@ const startServer = async () => {
   
   const server = app.listen(PORT, () => {
     console.log(`\n🚀 Notezy Backend active in [${process.env.NODE_ENV || 'development'}] mode.`);
-    console.log(`📡 Listening on: http://localhost:${PORT}`);
+    console.log(`📡 Listening on: ${SERVER_URL}`);
   });
   
   // Clean termination handlers

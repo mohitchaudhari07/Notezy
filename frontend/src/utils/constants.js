@@ -1,10 +1,9 @@
 const getApiBaseUrl = () => {
   const envUrl = import.meta.env.VITE_API_URL;
-  if (envUrl && !envUrl.includes("localhost")) {
-    return envUrl;
+  if (envUrl) {
+    return envUrl.replace(/\/$/, "");
   }
-  const hostname = typeof window !== "undefined" ? window.location.hostname : "localhost";
-  return `http://${hostname}:5000/api`;
+  return "https://notezy-u585.onrender.com/api";
 };
 
 export const API_BASE_URL = getApiBaseUrl();

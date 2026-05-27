@@ -1,9 +1,11 @@
 const corsOptions = {
   origin: (origin, callback) => {
-    // Permitted origins from env or default local dev server
+    // Permitted origins from env, production frontend, and local dev servers
     const allowedOrigins = [
-      process.env.CLIENT_URL || 'http://localhost:5173',
+      process.env.CLIENT_URL || 'https://notezy1.onrender.com',
+      'https://notezy1.onrender.com',
       'http://localhost:3000',
+      'http://localhost:5173',
       'http://127.0.0.1:5173'
     ];
     
