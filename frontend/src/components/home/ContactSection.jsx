@@ -1,8 +1,9 @@
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail} from "lucide-react";
 import { useState } from "react";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
 import Card from "../ui/Card";
+import { enquiryService } from "../../services/enquiryService";
 
 const subjects = [
   "General Inquiry",
@@ -36,11 +37,18 @@ export default function ContactSection() {
     if (Object.keys(next).length) return;
 
     setSubmitting(true);
-    // TODO: POST /api/contact when backend is ready
-    await new Promise((r) => setTimeout(r, 800));
-    setSubmitting(false);
-    setSuccess(true);
-    setForm({ name: "", email: "", subject: subjects[0], message: "" });
+    try {
+      await enquiryService.submitEnquiry(form);
+      setSuccess(true);
+      setForm({ name: "", email: "", subject: subjects[0], message: "" });
+    } catch (err) {
+      console.error("Failed to submit contact enquiry:", err);
+      setErrors({
+        submit: err.response?.data?.message || err.message || "Failed to deliver message. Please check your network and try again."
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -63,36 +71,22 @@ export default function ContactSection() {
                 <div>
                   <p className="font-semibold text-gray-900">Email us</p>
                   <a
-                    href="Notezy@gmail.com"
+                    href="mailto:notezy707@gmail.com"
                     className="text-sm text-blue-600 hover:text-blue-700"
                   >
-                    Notezy@gmail.com
+                    notezy707@gmail.com
                   </a>
                 </div>
               </li>
-              <li className="flex gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-600">
-                  <Phone className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="font-semibold text-gray-900">Call us</p>
-                  <a
-                    href="tel:+911800123456"
-                    className="text-sm text-blue-600 hover:text-blue-700"
-                  >
-                    +91 1800-123-456
-                  </a>
-                </div>
-              </li>
+             
             </ul>
 
             <div className="mt-8 rounded-xl bg-blue-50 p-6">
               <h3 className="font-semibold text-gray-900">
-                Join our Representative Program
+                Join our Contributor Program
               </h3>
               <p className="mt-2 text-sm text-gray-600">
-                Become a campus ambassador and help students access quality
-                resources while earning rewards.
+                Constribute to our mission by sharing resources, becoming a campus representative. Let&apos;s empower students together!
               </p>
               <a
                 href="#"
@@ -139,7 +133,7 @@ export default function ContactSection() {
                   value={form.email}
                   onChange={handleChange}
                   error={errors.email}
-                  placeholder="you@university.edu"
+                  placeholder="you@gmail.com"
                 />
                 <div>
                   <label
@@ -182,6 +176,9 @@ export default function ContactSection() {
                     <p className="mt-1 text-xs text-red-600">{errors.message}</p>
                   )}
                 </div>
+                {errors.submit && (
+                  <p className="text-xs font-semibold text-red-600 text-center bg-red-50 p-2.5 rounded-lg border border-red-100">{errors.submit}</p>
+                )}
                 <Button type="submit" fullWidth isLoading={submitting}>
                   Send Message
                 </Button>

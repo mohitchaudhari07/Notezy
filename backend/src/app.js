@@ -40,6 +40,7 @@ const resourceRoutes = require('./routes/resource.routes');
 const aiRoutes = require('./routes/ai.routes');
 const dashboardRoutes = require('./routes/dashboard.routes');
 const userRoutes = require('./routes/user.routes');
+const enquiryRoutes = require('./routes/enquiry.routes');
 
 // Mount API routes
 app.use('/api/auth', authRoutes);
@@ -47,6 +48,7 @@ app.use('/api/resources', resourceRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/enquiry', enquiryRoutes);
 
 app.get("/", (req, res) => {
   res.status(200).json({

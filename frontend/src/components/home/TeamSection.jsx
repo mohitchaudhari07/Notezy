@@ -9,7 +9,7 @@ export default function TeamSection() {
             Meet the Founder
           </h2>
           <h3 className="text-lg font-semibold text-gray-700">
-            Mohit Chaudhari - Founder & CEO of Notezy
+            Unknown - Founder 
           </h3>
           <p className="mx-auto italic mt-4 max-w-2xl text-gray-500">
             -As an engineering student, I often struggled to find previous year question papers and study materials scattered across different sources. Notezy was created to solve that problem by providing a centralized platform where students can easily access organized academic resources and prepare more effectively for their exams

@@ -1,13 +1,12 @@
 export const TEAM_MEMBERS = [
   {
     id: 1,
-    name: "Er. Mohit Chaudhari",
-    title: "Founder & CEO",
+    name: "Unknown Engineering Student",
+    title: "Founder",
     bio: "Engineering student, web developer, and tech enthusiast passionate about building digital products that make learning easier. Dedicated to creating accessible and organized academic resources for students.",
     image:
       "https://res.cloudinary.com/dqgfgmkkc/image/upload/v1779716501/ojw4qnrzibbvbsjajd5j.png",
   },
-
 ];
 
 export const FAQ_ITEMS = [
