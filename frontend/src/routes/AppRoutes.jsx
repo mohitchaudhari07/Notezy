@@ -4,6 +4,7 @@ import AuthLayout from "../layouts/AuthLayout";
 import DashboardLayout from "../layouts/DashboardLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import GuestRoute from "./GuestRoute";
+import AnalyticsTracker from "../components/AnalyticsTracker";
 
 import Home from "../pages/Home/Home";
 import About from "../pages/About/About";
@@ -28,6 +29,7 @@ import { ROUTES } from "../utils/constants";
 export default function AppRoutes() {
   return (
     <BrowserRouter>
+      <AnalyticsTracker />
       <Routes>
         <Route element={<MainLayout />}>
           <Route index element={<Home />} />
