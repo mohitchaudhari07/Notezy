@@ -20,7 +20,7 @@ export default function Hero() {
             {/* Trust Badge */}
             <div className="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50/60 px-4 py-1.5 text-xs font-bold text-indigo-700 shadow-xs backdrop-blur-md">
               <Sparkles className="h-3.5 w-3.5 text-indigo-600 animate-pulse" />
-              <span>Trusted by 25,000+ Engineering Students</span>
+              <span>Trusted by 2500+ Engineering Students</span>
             </div>
 
             {/* Premium Typography Heading */}
@@ -33,7 +33,7 @@ export default function Hero() {
 
             {/* Captivating description */}
             <p className="max-w-2xl text-base sm:text-lg leading-relaxed text-slate-500">
-              Access verified Previous Year Question papers (PYQs), distinct syllabus patterns, and dynamic chapter notes from 120+ universities. Built for speed and acing your semester.
+              Access verified Previous Year Question papers (PYQs), distinct syllabus patterns, and dynamic chapter notes from SPPU universities. Built for speed and acing your semester.
             </p>
 
             {/* Elegant Guest Access Instructions Card */}
